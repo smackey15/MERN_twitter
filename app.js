@@ -8,21 +8,19 @@ app.use(bodyParser.json());
 const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
 const User = require("./models/User")
+const passport = require("passport");
 
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
 
-app.get("/", (req, res) => {
-    const user = new User({
-        handle: "Jim",
-        email: "jim@jim.com",
-        password: "123456"
-    })
-    user.save()
-    res.send("Hello Suckers!")
-});
+// app.get("/", (req, res) => {
+//     res.send("Hello Suckers!")
+// });
+
+app.use(passport.initialize());
+require('./config/passport')(passport);
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
 
