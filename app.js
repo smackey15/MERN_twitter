@@ -9,8 +9,6 @@ const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
 const User = require("./models/User")
 const passport = require("passport");
-app.use(passport.initialize());
-require('./config/passport')(passport);
 
 mongoose
   .connect(db, { useNewUrlParser: true })
@@ -20,6 +18,9 @@ mongoose
 // app.get("/", (req, res) => {
 //     res.send("Hello Suckers!")
 // });
+
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
